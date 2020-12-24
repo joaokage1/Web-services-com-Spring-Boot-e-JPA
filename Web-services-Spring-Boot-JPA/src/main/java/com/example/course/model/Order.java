@@ -106,6 +106,10 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 
+	public Double getTotal() {
+		return this.items.stream().mapToDouble(item -> item.getSubTotal()).reduce(0, (a, b) -> a + b);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
