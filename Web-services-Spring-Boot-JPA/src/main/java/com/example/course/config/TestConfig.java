@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.example.course.model.Category;
 import com.example.course.model.Order;
+import com.example.course.model.OrderItem;
 import com.example.course.model.Product;
 import com.example.course.model.User;
 import com.example.course.model.enums.OrderStatus;
 import com.example.course.repositories.CategoryRepository;
+import com.example.course.repositories.OrderItemRepository;
 import com.example.course.repositories.OrderRepository;
 import com.example.course.repositories.ProductRepository;
 import com.example.course.repositories.UserRepository;
@@ -30,6 +32,8 @@ public class TestConfig implements CommandLineRunner {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	public UserRepository getRepository() {
 		return this.repository;
@@ -45,6 +49,10 @@ public class TestConfig implements CommandLineRunner {
 
 	public ProductRepository getProductRepository() {
 		return this.productRepository;
+	}
+
+	public OrderItemRepository getOrderItemRepository() {
+		return this.orderItemRepository;
 	}
 
 	@Override
@@ -79,6 +87,13 @@ public class TestConfig implements CommandLineRunner {
 		p5.getCategories().add(cat2);
 
 		getProductRepository().saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+		getOrderItemRepository().saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 	}
 
 }
