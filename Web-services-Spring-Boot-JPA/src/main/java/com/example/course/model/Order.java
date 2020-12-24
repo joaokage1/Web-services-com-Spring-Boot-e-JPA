@@ -1,44 +1,40 @@
 package com.example.course.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
+@Table(name = "tb_order")
+public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String email;
-	private String phone;
-	private String pass;
+	private Instant date;
 
-	@OneToMany(mappedBy = "client")
-	private List<Order> orders = new ArrayList<Order>();
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private User client;
 
-	public User() {
+	public Order() {
 
 	}
 
-	public User(Long id, String name, String email, String phone, String pass) {
+	public Order(Long id, Instant date, User client) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.pass = pass;
+		this.date = date;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -49,40 +45,20 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return this.name;
+	public Instant getDate() {
+		return this.date;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDate(Instant date) {
+		this.date = date;
 	}
 
-	public String getEmail() {
-		return this.email;
+	public User getClient() {
+		return this.client;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getPass() {
-		return this.pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public List<Order> getOrders() {
-		return this.orders;
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 	@Override
@@ -104,7 +80,7 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		User other = (User) obj;
+		Order other = (Order) obj;
 		if (this.id == null) {
 			if (other.id != null) {
 				return false;
@@ -114,4 +90,5 @@ public class User implements Serializable {
 		}
 		return true;
 	}
+
 }
