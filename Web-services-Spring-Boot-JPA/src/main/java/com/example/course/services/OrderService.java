@@ -24,7 +24,7 @@ public class OrderService {
 	}
 
 	public Order fetchOrderById(Long id) {
-		Optional<Order> Order = getRepository().findById(id);
-		return Order.get();
+		Optional<Order> order = getRepository().findById(id);
+		return order.get();
 	}
 }

@@ -9,28 +9,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.course.model.Order;
-import com.example.course.services.OrderService;
+import com.example.course.model.Category;
+import com.example.course.services.CategoryService;
 
 @RestController
-@RequestMapping(value = "/orders")
-public class OrderResource {
+@RequestMapping(value = "/categories")
+public class CategoryResource {
 
 	@Autowired
-	private OrderService service;
+	private CategoryService service;
 
-	public OrderService getService() {
+	public CategoryService getService() {
 		return this.service;
 	}
 
-	@GetMapping("/fetch-all-orders")
-	public ResponseEntity<List<Order>> fetchAll() {
+	@GetMapping
+	public ResponseEntity<List<Category>> fetchAll() {
 		return ResponseEntity.ok().body(getService().fetchAll());
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Order> fetchOrderById(@PathVariable Long id) {
-		Order order = getService().fetchOrderById(id);
-		return ResponseEntity.ok().body(order);
+	public ResponseEntity<Category> fetchCategoryById(@PathVariable Long id) {
+		Category category = getService().fetchCategoryById(id);
+		return ResponseEntity.ok().body(category);
 	}
 }
