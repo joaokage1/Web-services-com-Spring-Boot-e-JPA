@@ -1,6 +1,7 @@
 package com.example.course.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,5 +21,10 @@ public class UserService {
 
 	public List<User> fetchAll() {
 		return getRepository().findAll();
+	}
+
+	public User fetchUserById(Long id) {
+		Optional<User> user = getRepository().findById(id);
+		return user.get();
 	}
 }
